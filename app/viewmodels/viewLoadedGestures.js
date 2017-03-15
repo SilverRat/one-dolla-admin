@@ -1,4 +1,4 @@
-define(['durandal/app', 'knockout', 'onedollar'], function (app, ko, _r) {
+define(['durandal/app', 'knockout', 'onedollar'], function (app, ko, onedol) {
 	return {
 	    //
 		// Startup
@@ -8,10 +8,10 @@ define(['durandal/app', 'knockout', 'onedollar'], function (app, ko, _r) {
 		activate: function ()
 		{   
 			//Lets try to do this in code for all gestures.
-			alert(typeof(_r));
+			alert(typeof(onedol));
 			//var onedolla = new _r.DollarRecognizer();
-			//var onedol = new _r();
-			//alert(typeof(onedol));
+			var _r = new onedol();
+			alert(typeof(_r));
 			alert(_r.Unistrokes.length);
 			
 			for (var i = 0; i < _r.Unistrokes.length; i++){
