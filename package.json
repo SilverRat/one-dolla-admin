@@ -1,0 +1,22 @@
+{
+  "name": "one-dolla-admin",
+  "version": "1.0.0",
+  "description": "![Durandal](http://durandaljs.com/media/DURANDAL-FINAL-HI-RES-LOGO-HOR-WEB.png)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SilverRat/one-dolla-admin.git"
+  },
+  "author": "Jerry Gray",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SilverRat/one-dolla-admin/issues"
+  },
+  "homepage": "https://github.com/SilverRat/one-dolla-admin#readme",
+  "dependencies": {
+    "one-dolla": "git+https://github.com/SilverRat/one-dolla.git"
+  }
+}

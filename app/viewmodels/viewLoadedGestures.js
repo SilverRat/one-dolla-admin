@@ -7,15 +7,11 @@ define(['durandal/app', 'knockout', 'onedollar'], function (app, ko, onedol) {
 		gestures: ko.observableArray([]),
 		activate: function ()
 		{   
-			//Lets try to do this in code for all gestures.
-			alert(typeof(onedol));
-			//var onedolla = new _r.DollarRecognizer();
+			// Create a canvas obect for each gestures original points and processed points and
+			//  add them to an array for future display.
 			var _r = new onedol();
-			alert(typeof(_r));
-			alert(_r.Unistrokes.length);
 			
 			for (var i = 0; i < _r.Unistrokes.length; i++){
-				//alert("drawing unistroke number: " + i);
 				var gestureTile = document.createElement('canvas');
 				gestureTile.className = "col-xs-6";
 				gestureCtx = gestureTile.getContext('2d');
