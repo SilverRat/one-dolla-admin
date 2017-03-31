@@ -8,9 +8,7 @@
         },
         activate: function () {
             router.map([
-                { route: '', title:'Welcome', moduleId: 'viewmodels/welcome', nav: true },
-                { route: 'flickr', moduleId: 'viewmodels/flickr', nav: true },
-                { route: 'Dollar Recognizer', moduleId: 'viewmodels/dollarRecognizer', nav: true},
+                { route: '', title: 'Dollar Recognizer', moduleId: 'viewmodels/dollarRecognizer', nav: true},
                 { route: 'View Gestures', moduleId: 'viewmodels/viewLoadedGestures', nav: true}
             ]).buildNavigationModel();
             

@@ -1,4 +1,4 @@
-<section>
+<section data-bind="scrollY: scrollY">
 	<div id="Content">
 
 		<p class="subhead">One Dollar Gesture Analyzer</p>
@@ -11,7 +11,7 @@
 						<p style="margin-bottom:4pt;font-size:10pt"><i>Make strokes on this canvas. If a misrecognition occurs,
 						add the misrecognized unistroke as an example of the intended gesture.</i>
 						</p>
-
+						<span data-bind="text: message"></span><br>
 						<!--<canvas id="myCanvas" width="256" height="192" style="background-color:#dddddd" data-bind = "onmousedown: mouseDownEvent(event.clientX, event.clientY)") data-bind= "onmousemove: mouseMoveEvent(event.clientX, event.clientY)" data-bind="onmouseup: mouseUpEvent(event.clientX, event.clientY)" oncontextmenu="return false;"> -->
 						<canvas id="myCanvas" width="256" height="192" style="background-color:#dddddd" data-bind="event: {mousedown: mouseDownEvent, mousemove: mouseMoveEvent, mouseup: mouseUpEvent}" oncontextmenu="return false;">
 							<span style="background-color:#ffff88;">The &lt;canvas&gt; element is not supported by this browser.</span>
