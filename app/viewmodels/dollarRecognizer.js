@@ -202,7 +202,7 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 		{
 			// This was challenging.  Needed to parse the text field to an array of JSON objects for
 			//  the one-dollar init function to work.
-			this._r = new onedol($.parseJSON('[' + this.initGestures + ']')); 
+			this._r = new onedol(JSON.parse(this.initGestures)); 
 			this.message = "Loaded " + this._r.Unistrokes.length + " gestures";
 		},
 
@@ -220,13 +220,12 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 
 		onClickOutput: function ()
 		{
-			this.outputGestures = "";
+			let gestures = [];
+
 			for (let x = 0; x < this._r.Unistrokes.length; x++){
-				this.outputGestures += '{"name": "' + this._r.Unistrokes[x].Name + '", "points": ' + JSON.stringify(this._r.Unistrokes[x].originalPoints) + "}";
-				if (x < this._r.Unistrokes.length -1){
-					this.outputGestures += ",";
-				}
+				gestures.push({"name":  this._r.Unistrokes[x].Name , "points": this._r.Unistrokes[x].originalPoints});
 			}
+			this.outputGestures = JSON.stringify(gestures);
 		}
 
 	}; // End Return
