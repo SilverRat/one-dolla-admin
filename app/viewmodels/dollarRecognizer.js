@@ -13,6 +13,8 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 		gestureCtx: "",
 		gestureName: "Type name here...",
 		message: "Draw a gesture",
+		outputGestures: "",
+		initGestures: "",
 		scrollY: 0,
 
 		attached: function ()
@@ -189,11 +191,19 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 			//alert("New Gesture Name is: " + name);
 			if (this._points.length >= 10 && name.length > 0)
 			{
-				var num = this._r.AddGesture(name, _points);
+				var num = this._r.AddGesture(name, this._points);
 				this.message = name + " added. Number of " + name + "'s defined: " + num + ".";
 				//drawText("\"" + name + "\" added. Number of \"" + name + "\"s defined: " + num + ".");
 				this.message = name + " added. " + this._r.Unistrokes.length;
 			}
+		},
+
+		onClickLoadCustom: function ()
+		{
+			// This was challenging.  Needed to parse the text field to an array of JSON objects for
+			//  the one-dollar init function to work.
+			this._r = new onedol($.parseJSON('[' + this.initGestures + ']')); 
+			this.message = "Loaded " + this._r.Unistrokes.length + " gestures";
 		},
 
 		onClickCustom: function ()
@@ -204,19 +214,20 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 
 		onClickDelete: function ()
 		{
-			//alert("in Delete Event");
 			var num = this._r.DeleteUserGestures(); // deletes any user-defined unistrokes
-			//alert("All user-defined gestures have been deleted.");
+			this.message = this._r.Unistrokes.length + " gestures defined"
 		},
 
 		onClickOutput: function ()
 		{
-			alert(this._r.Unistrokes.length);
-			alert(this._r.Unistrokes[0].Points.length);
-			alert(JSON.stringify(this._r.Unistrokes[0].Points));
-			alert(this._r.Unistrokes[0].originalPoints.length);
-			alert(JSON.stringify(this._r.Unistrokes[0].originalPoints));
-		},
+			this.outputGestures = "";
+			for (let x = 0; x < this._r.Unistrokes.length; x++){
+				this.outputGestures += '{"name": "' + this._r.Unistrokes[x].Name + '", "points": ' + JSON.stringify(this._r.Unistrokes[x].originalPoints) + "}";
+				if (x < this._r.Unistrokes.length -1){
+					this.outputGestures += ",";
+				}
+			}
+		}
 
 	}; // End Return
 

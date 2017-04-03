@@ -33,6 +33,8 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'knockout', '
     });
 
     // ToDo: This is firing on scroll, but we're not getting our update in the viewModel.
+    // Sorry Guy, looks like i screwed this up further! 
+    /*
     ko.bindingHandlers.scrollY = {
         init: function(element, valueAccessor) {
             $(".page-host").scroll(function(data) {
@@ -46,6 +48,7 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'knockout', '
                 element.scroll();
             }
     };
+    */
 
     app.start().then(function() {
         //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
