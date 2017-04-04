@@ -28,11 +28,7 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 			this._g.fillStyle = "rgb(0,0,225)";
 			this._g.strokeStyle = "rgb(0,0,225)";
 			this._g.lineWidth = 1;
-			//this._g.font = "16px Gentilis";
 			this._rc = this.getCanvasRect(canvas); // canvas rect on page
-			//this._g.fillStyle = "rgb(255,255,136)";
-			//this._g.fillRect(0, 0, this._rc.width, 20);
-
 			this._isDown = false;
 
 		},
@@ -57,15 +53,6 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 		//
 		// Mouse Events
 		//
-
-		/*
-		getScrollY: function()  // Technically, this works but mixes the view in the view model.
-		{
-			var scrollY = $(".page-host").scrollTop();
-			return scrollY;
-		},
-		*/
-
 		mouseDownEvent: function (data, event)
 		{
 			//alert("in mouseDownEvent");
@@ -85,7 +72,6 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 			this._points.length = 1; // clear
 			this._points[0] = new Point(x, y); // Don't know why Point works!!
 			//this.message = "Recording unistroke...";
-			// drawText("Recording unistroke...");  This aint workin.  Maybe just bind to a text box and quit workin with Canvas?
 			this._g.fillRect(x - 4, y - 3, 9, 9);
 		},
 
@@ -123,12 +109,10 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 				{
 					var result = this._r.Recognize(this._points); //, document.getElementById('useProtractor').checked);
 					this.message = "Result: " + result.Name + " (" + this.round(result.Score,2) + ").";
-					//this.drawText("Result: " + result.Name + " (" + this.round(result.Score,2) + ").");
 				}
 				else // fewer than 10 points were inputted
 				{
 					this.message = "Too few points made. Please try again.";
-					//this.drawText("Too few points made. Please try again.");
 				}
 			}
 		},
@@ -140,17 +124,6 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 				ctx.fillRect(Points[x].X/4 , Points[x].Y/4 ,1 ,1);
 			}	
 		},
-
-		/*
-		drawText: function (str)
-		{
-			this._g.fillStyle = "rgb(255,255,136)";
-			this._g.fillRect(0, 0, _rc.width, 20);
-			this._g.fillStyle = "rgb(0,0,255)";
-			this._g.fillText(str, 1, 14);
-		},
-		*/
-
 
 		drawConnectedPoint: function (from, to)
 		{
@@ -171,6 +144,7 @@ define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http
 		// Unistroke Adding and Clearing Button Events
 		//
 		/*
+		
 		this.onClickAddExisting = function ()
 		{
 			alert("in Add Existing Event");

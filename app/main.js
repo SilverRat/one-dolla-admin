@@ -32,23 +32,14 @@ define(['durandal/system', 'durandal/app', 'durandal/viewLocator', 'knockout', '
         observable: true
     });
 
-    // ToDo: This is firing on scroll, but we're not getting our update in the viewModel.
-    // Sorry Guy, looks like i screwed this up further! 
-    /*
+    // Custom binding for scrollY
     ko.bindingHandlers.scrollY = {
-        init: function(element, valueAccessor) {
+        init: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
             $(".page-host").scroll(function(data) {
-                var value = valueAccessor();
-                value(data.target.scrollTop);
+                bindingContext.$data.scrollY = data.target.scrollTop;
             });
-        },
-        update: function(element, valueAccessor) {
-            var value = valueAccessor();
-            if (ko.unwrap(value))
-                element.scroll();
-            }
+        }
     };
-    */
 
     app.start().then(function() {
         //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
