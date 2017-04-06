@@ -18,5 +18,13 @@
   "homepage": "https://github.com/SilverRat/one-dolla-admin#readme",
   "dependencies": {
     "one-dolla": "git+https://github.com/SilverRat/one-dolla.git"
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.8",
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.1",
+    "eslint-plugin-requirejs": "^3.1.1",
+    "gulp": "^3.9.1",
+    "gulp-eslint": "^3.0.1"
   }
 }

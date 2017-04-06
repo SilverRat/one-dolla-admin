@@ -1,207 +1,185 @@
-define(['jquery','plugins/http', 'durandal/app', 'onedollar'], function ($, http, app, onedol) {
-	
-	return{
+define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http, app, Onedol) {
+    return{
 
-		//
-		// Startup
-		//
-		_isDown: "",
-		_points: "",
-		_r: "",
-		_g: "",
-		rc: "",
-		gestureCtx: "",
-		gestureName: "Type name here...",
-		message: "Draw a gesture",
-		outputGestures: "",
-		initGestures: "",
-		scrollY: 0,
+        //
+        // Startup
+        //
+        _isDown: "",
+        _points: "",
+        _r: "",
+        _g: "",
+        rc: "",
+        gestureCtx: "",
+        gestureName: "Type name here...",
+        message: "Draw a gesture",
+        outputGestures: "",
+        initGestures: "",
+        scrollY: 0,
 
-		attached: function ()
-		{
-			//alert("Initializing");
-			this._points = new Array();
-			this._r = new onedol();
+        attached: function() {
+            // alert("Initializing");
+            this._points = [];  // new Array();
+            this._r = new Onedol();
 
-			var canvas = document.getElementById('myCanvas');
-			this._g = canvas.getContext('2d');
-			this._g.fillStyle = "rgb(0,0,225)";
-			this._g.strokeStyle = "rgb(0,0,225)";
-			this._g.lineWidth = 1;
-			this._rc = this.getCanvasRect(canvas); // canvas rect on page
-			this._isDown = false;
+            let canvas = document.getElementById("myCanvas");
+            this._g = canvas.getContext("2d");
+            this._g.fillStyle = "rgb(0,0,225)";
+            this._g.strokeStyle = "rgb(0,0,225)";
+            this._g.lineWidth = 1;
+            this._rc = this.getCanvasRect(canvas); // canvas rect on page
+            this._isDown = false;
+        },
 
-		},
+        getCanvasRect: function(canvas) {
+            const w = canvas.width;
+            const h = canvas.height;
 
-		getCanvasRect: function(canvas)
-		{
-			var w = canvas.width;
-			var h = canvas.height;
-
-			var cx = canvas.offsetLeft;
-			var cy = canvas.offsetTop;
-			while (canvas.offsetParent != null)
-			{
-				canvas = canvas.offsetParent;
-				cx += canvas.offsetLeft;
-				cy += canvas.offsetTop;
-			}
-			return {x: cx, y: cy, width: w, height: h};
-		},
+            let cx = canvas.offsetLeft;
+            let cy = canvas.offsetTop;
+            while (canvas.offsetParent != null) {
+                canvas = canvas.offsetParent;
+                cx += canvas.offsetLeft;
+                cy += canvas.offsetTop;
+            }
+            return {x: cx, y: cy, width: w, height: h};
+        },
 
 
-		//
-		// Mouse Events
-		//
-		mouseDownEvent: function (data, event)
-		{
-			//alert("in mouseDownEvent");
-			
-			var x = event.clientX;
-			var y = event.clientY;
+        //
+        // Mouse Events
+        //
+        mouseDownEvent: function(data, event) {
+            // alert("in mouseDownEvent");
 
-			document.onselectstart = function() { return false; } // disable drag-select
-			document.onmousedown = function() { return false; } // disable drag-select
+            let x = event.clientX;
+            let y = event.clientY;
 
-			this._isDown = true;
-			x -= this._rc.x;
-			y -= this._rc.y - this.scrollY;
-			this.message = "scroll Y is now " + this.scrollY;
-			if (this._points.length > 0)
-				this._g.clearRect(0, 0, this._rc.width, this._rc.height);
-			this._points.length = 1; // clear
-			this._points[0] = new Point(x, y); // Don't know why Point works!!
-			//this.message = "Recording unistroke...";
-			this._g.fillRect(x - 4, y - 3, 9, 9);
-		},
+            document.onselectstart = function() {
+                return false;
+            }; // disable drag-select
+            document.onmousedown = function() {
+                return false;
+            }; // disable drag-select
 
-		mouseMoveEvent: function (data, event)
-		{
-			//alert("in mouseMoveEvent");
+            this._isDown = true;
+            x -= this._rc.x;
+            y -= this._rc.y - this.scrollY;
+            this.message = "scroll Y is now " + this.scrollY;
+            if (this._points.length > 0)
+                this._g.clearRect(0, 0, this._rc.width, this._rc.height);
+            this._points.length = 1; // clear
+            this._points[0] = new Point(x, y); // Don"t know why Point works!!
+            // this.message = "Recording unistroke...";
+            this._g.fillRect(x - 4, y - 3, 9, 9);
+        },
 
-			var x = event.clientX;
-			var y = event.clientY;
-			
-			if (this._isDown)
-			{
-				x -= this._rc.x;
-				y -= this._rc.y - this.scrollY;
-				this.message = "scroll Y is now " + this.scrollY;
-				this._points[this._points.length] = new Point(x, y); // append
-				this.drawConnectedPoint(this._points.length - 2, this._points.length - 1);
-			}
-		},
+        mouseMoveEvent: function(data, event) {
+            // alert("in mouseMoveEvent");
 
-		mouseUpEvent: function (data, event)
-		{
-			//alert("in mouseUpEvent");
+            let x = event.clientX;
+            let y = event.clientY;
 
-			var x = event.clientX;
-			var y = event.clientY;
+            if (this._isDown) {
+                x -= this._rc.x;
+                y -= this._rc.y - this.scrollY;
+                this.message = "scroll Y is now " + this.scrollY;
+                this._points[this._points.length] = new Point(x, y); // append
+                this.drawConnectedPoint(this._points.length - 2, this._points.length - 1);
+            }
+        },
 
-			document.onselectstart = function() { return true; } // enable drag-select
-			document.onmousedown = function() { return true; } // enable drag-select
+        mouseUpEvent: function(data, event) {
+            // alert("in mouseUpEvent");
 
-			if (this._isDown)
-			{
-				this._isDown = false;
-				if (this._points.length >= 10)
-				{
-					var result = this._r.Recognize(this._points); //, document.getElementById('useProtractor').checked);
-					this.message = "Result: " + result.Name + " (" + this.round(result.Score,2) + ").";
-				}
-				else // fewer than 10 points were inputted
-				{
-					this.message = "Too few points made. Please try again.";
-				}
-			}
-		},
+            document.onselectstart = function() {
+                return true;
+            }; // enable drag-select
+            document.onmousedown = function() {
+                return true;
+            }; // enable drag-select
 
-		drawGesture: function (ctx, Points)
-		{			
-			//Original Points
-			for (var x = 0; x < Points.length; x++){
-				ctx.fillRect(Points[x].X/4 , Points[x].Y/4 ,1 ,1);
-			}	
-		},
+            if (this._isDown) {
+                this._isDown = false;
+                if (this._points.length >= 10) {
+                    const result = this._r.Recognize(this._points); // document.getElementById("useProtractor").checked);
+                    this.message = "Result: " + result.Name + " (" + this.round(result.Score, 2) + ").";
+                } else { // fewer than 10 points were inputted
+                    this.message = "Too few points made. Please try again.";
+                }
+            }
+        },
 
-		drawConnectedPoint: function (from, to)
-		{
-			this._g.beginPath();
-			this._g.moveTo(this._points[from].X, this._points[from].Y);
-			this._g.lineTo(this._points[to].X, this._points[to].Y);
-			this._g.closePath();
-			this._g.stroke();
-		},
+        drawGesture: function(ctx, Points) {
+            // Original Points
+            for (let x = 0; x < Points.length; x++) {
+                ctx.fillRect(Points[x].X/4, Points[x].Y/4, 1, 1);
+            }
+        },
 
-		round: function (n, d) // round 'n' to 'd' decimals
-		{
-			d = Math.pow(10, d);
-			return Math.round(n * d) / d
-		},
+        drawConnectedPoint: function(from, to) {
+            this._g.beginPath();
+            this._g.moveTo(this._points[from].X, this._points[from].Y);
+            this._g.lineTo(this._points[to].X, this._points[to].Y);
+            this._g.closePath();
+            this._g.stroke();
+        },
 
-		//
-		// Unistroke Adding and Clearing Button Events
-		//
-		/*
-		
-		this.onClickAddExisting = function ()
-		{
-			alert("in Add Existing Event");
-			if (_points.length >= 10)
-			{
-				var unistrokes = document.getElementById('unistrokes');
-				var name = unistrokes[unistrokes.selectedIndex].value;
-				var num = _r.AddGesture(name, _points);
-				drawText("\"" + name + "\" added. Number of \"" + name + "\"s defined: " + num + ".");
-			}
-		};
-		*/
+        round: function(n, d) { // round "n" to "d" decimals
+            d = Math.pow(10, d);
+            return Math.round(n * d) / d;
+        },
 
-		onClickAddCustom: function ()
-		{
-			//alert("in onClickAddCustom");
-			var name = this.gestureName; //document.getElementById('custom').value; //Get name via knockout binding.
-			//alert("New Gesture Name is: " + name);
-			if (this._points.length >= 10 && name.length > 0)
-			{
-				var num = this._r.AddGesture(name, this._points);
-				this.message = name + " added. Number of " + name + "'s defined: " + num + ".";
-				//drawText("\"" + name + "\" added. Number of \"" + name + "\"s defined: " + num + ".");
-				this.message = name + " added. " + this._r.Unistrokes.length;
-			}
-		},
+        //
+        // Unistroke Adding and Clearing Button Events
+        //
+        /*
 
-		onClickLoadCustom: function ()
-		{
-			// This was challenging.  Needed to parse the text field to an array of JSON objects for
-			//  the one-dollar init function to work.
-			this._r = new onedol(JSON.parse(this.initGestures)); 
-			this.message = "Loaded " + this._r.Unistrokes.length + " gestures";
-		},
+        this.onClickAddExisting = function ()
+        {
+            alert("in Add Existing Event");
+            if (_points.length >= 10)
+            {
+                var unistrokes = document.getElementById("unistrokes");
+                var name = unistrokes[unistrokes.selectedIndex].value;
+                var num = _r.AddGesture(name, _points);
+                drawText("\"" + name + "\" added. Number of \"" + name + "\"s defined: " + num + ".");
+            }
+        };
+        */
 
-		onClickCustom: function ()
-		{
-			//alert("in Click Custom Event");
-			document.getElementById('custom').select();
-		},
+        onClickAddCustom: function() {
+            // alert("in onClickAddCustom");
+            const name = this.gestureName;
+            if (this._points.length >= 10 && name.length > 0) {
+                const num = this._r.AddGesture(name, this._points);
+                this.message = name + " added. Number of " + name + "'s defined: " + num + ".";
+                this.message = name + " added. " + this._r.Unistrokes.length;
+            }
+        },
 
-		onClickDelete: function ()
-		{
-			var num = this._r.DeleteUserGestures(); // deletes any user-defined unistrokes
-			this.message = this._r.Unistrokes.length + " gestures defined"
-		},
+        onClickLoadCustom: function() {
+            // This was challenging.  Needed to parse the text field to an array of JSON objects for
+            //  the one-dollar init function to work.
+            this._r = new Onedol(JSON.parse(this.initGestures));
+            this.message = "Loaded " + this._r.Unistrokes.length + " gestures";
+        },
 
-		onClickOutput: function ()
-		{
-			let gestures = [];
+        onClickCustom: function() {
+            // alert("in Click Custom Event");
+            document.getElementById("custom").select();
+        },
 
-			for (let x = 0; x < this._r.Unistrokes.length; x++){
-				gestures.push({"name":  this._r.Unistrokes[x].Name , "points": this._r.Unistrokes[x].originalPoints});
-			}
-			this.outputGestures = JSON.stringify(gestures);
-		}
+        onClickDelete: function() {
+            this.message = this._r.Unistrokes.length + " gestures defined";
+        },
 
-	}; // End Return
+        onClickOutput: function() {
+            let gestures = [];
 
+            for (let x = 0; x < this._r.Unistrokes.length; x++) {
+                gestures.push({"name": this._r.Unistrokes[x].Name, "points": this._r.Unistrokes[x].originalPoints});
+            }
+            this.outputGestures = JSON.stringify(gestures);
+        }
+    }; // End Return
 }); // Close Define Function
