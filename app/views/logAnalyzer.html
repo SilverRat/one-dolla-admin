@@ -1,0 +1,46 @@
+<section>
+    <div id="Content">
+        <p class="subhead">One Dollar Gesture Analyzer</p>
+        <p>
+            This page allows you to compare a library gesture to one loaded from a log file
+        </p>
+    
+        <div id="userInputs">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-2">Load gesture library:</div>
+                    <div class="col-md-2"><input type="text" id="custom" style="width:130px" value="" data-bind="value: initGestures" data-bind="click: onClickLoadCustom" onkeypress="if (event.keyCode == 13) onClickLoadCustom()"></div>
+                    <div class="col-md-2"><input type="button" style="width:64px" value="Load" data-bind="click : onClickLoadCustom"></div>
+                    <div class="col-md-3">Load gesture from log:</div>
+                    <div class="col-md-1"><input type="text" id="custom" style="width:70px" value="" data-bind="value: initLogGesture" data-bind="click: onClickLoadCustomLog" onkeypress="if (event.keyCode == 13) onClickLoadCustomLog()"></div>
+                    <div class="col-md-2"><input type="button" style="width:64px" value="Load" data-bind="click : onClickLoadCustomLog"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Select the Library gesture to visualize:</div>
+                    <div class="col-md-2"><select data-bind="options: libraryGestureNames, value: selectedLibraryGesture, selectedOptions: onClickLibrarySelection"></select></div>
+                    <div class="col-md-4">Select the Log gesture to visualize:</div>
+                    <div class="col-md-2"><select data-bind="options: logGestureNames"></select></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Delete all library gestures:</div>
+                    <div class="col-md-2"><input type="button" style="width:64px" value="Delete" data-bind="click: onClickDelete"></div>
+                    <div class="col-md-4">Delete all log gestures:</div>
+                    <div class="col-md-2"><input type="button" style="width:64px" value="Delete" data-bind="click: onClickDeleteLog"></div>
+                </div>
+            </div>
+            <br><span data-bind="text: message"></span><br>
+        </div>
+
+        <div id="container">	
+            <div class="row">
+                <div class="col-md-6">Library Gestures</div>
+                <div class="col-md-6>">Log Gestures</div>
+            </div>	
+            <div class="row">
+                <div class="col-md-6" id="libraryGestureTiles"></div>
+                <div class="col-md-6" id="logGestureTiles"></div>
+            </div>	
+        </div>
+
+    </div>
+</section>	

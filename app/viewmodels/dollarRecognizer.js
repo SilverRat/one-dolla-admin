@@ -170,6 +170,7 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
         },
 
         onClickDelete: function() {
+            this._r.DeleteUserGestures(); 
             this.message = this._r.Unistrokes.length + " gestures defined";
         },
 
