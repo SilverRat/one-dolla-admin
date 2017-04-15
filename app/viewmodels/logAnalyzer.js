@@ -59,7 +59,7 @@ define(["durandal/app", "knockout", "onedollar"], function(app, ko, Onedol) {
         drawGesture: function(ctx, Points) {
             // Original Points
             for (let x = 0; x < Points.length; x++) {
-                ctx.fillRect(Points[x].X/4, Points[x].Y/4, 1, 1);  // UI Element :(
+                ctx.fillRect(Points[x].X/3, Points[x].Y/3, 2, 2);  // UI Element :(
             }
         },
 

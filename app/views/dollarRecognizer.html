@@ -5,48 +5,48 @@
 		<p>
 			This page will let you build a set of custom gestures and generate the code to initialize one-dollar.
 			<!-- Gesture image and canvas -->
-			</p><table border="0" cellspacing="10">
-				<tbody><tr>
-					<td valign="top" align="left">
-						<p style="margin-bottom:4pt;font-size:10pt"><i>Make strokes on this canvas. If a misrecognition occurs,
-						add the misrecognized unistroke as an example of the intended gesture.</i>
-						</p>
-						<span data-bind="text: message"></span><br>
-						<!--<canvas id="myCanvas" width="256" height="192" style="background-color:#dddddd" data-bind = "onmousedown: mouseDownEvent(event.clientX, event.clientY)") data-bind= "onmousemove: mouseMoveEvent(event.clientX, event.clientY)" data-bind="onmouseup: mouseUpEvent(event.clientX, event.clientY)" oncontextmenu="return false;"> -->
-						<canvas id="myCanvas" width="256" height="192" style="background-color:#dddddd" data-bind="event: {mousedown: mouseDownEvent, mousemove: mouseMoveEvent, mouseup: mouseUpEvent}" oncontextmenu="return false;">
-							<span style="background-color:#ffff88;">The &lt;canvas&gt; element is not supported by this browser.</span>
-						</canvas>
+		</p>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6" id="left-column">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-12">
+								<p style="margin-bottom:4pt;font-size:10pt"><i>Make strokes on this canvas. If a misrecognition occurs,
+									add the misrecognized unistroke as an example of the intended gesture.</i>
+								</p>
+								<span data-bind="text: message"></span><br>
+								<canvas id="myCanvas" width="256" height="192" style="background-color:#dddddd" data-bind="event: {mousedown: mouseDownEvent, mousemove: mouseMoveEvent, mouseup: mouseUpEvent}" oncontextmenu="return false;">
+									<span style="background-color:#ffff88;">The &lt;canvas&gt; element is not supported by this browser.</span>
+								</canvas>
+							</div>
+						</div>
 
-						<!-- Editing area below stroking canvas area -->
-						<table border="0" width="420" style="font-size:10pt">
-							<tbody>
-								<tr>
-									<td valign="top" align="left">Add a gesture:</td>
-									<td valign="top" align="right"><input type="text" id="custom" style="width:130px" value="" data-bind="value: gestureName" data-bind="click: onClickAddCustom" onkeypress="if (event.keyCode == 13) onClickAddCustom()"></td>
-									<td valign="top" align="right"><input type="button" style="width:64px" value="  Add   " data-bind="click : onClickAddCustom"></td>
-								</tr>
-								<tr>
-									<td valign="top" align="left">Load gestures:</td>
-									<td valign="top" align="right"><input type="text" id="custom" style="width:130px" value="" data-bind="value: initGestures" data-bind="click: onClickLoadCustom" onkeypress="if (event.keyCode == 13) onClickLoadCustom()"></td>
-									<td valign="top" align="right"><input type="button" style="width:64px" value=" Load " data-bind="click : onClickLoadCustom"></td>
-								</tr>
-								<tr>
-									<td valign="top" align="left">Delete all loaded gestures:</td>
-									<td valign="top" align="right">&nbsp;</td>
-									<td valign="top" align="right"><input type="button" style="width:64px" value="Delete" data-bind="click: onClickDelete"></td>
-								</tr>
-								<tr>
-									<td valign="top" align="left">Output all user-defined gestures:</td>
-									<td valign="top" align="right">&nbsp;</td>
-									<td valign="top" align="right"><input type="button" style="width:64px" value="Output" data-bind="click: onClickOutput"></td>
-								</tr>
-							</tbody>
-						</table>
-						<!-- End of editing area below stroking canvas area -->
-					</td>
-				</tr>
-			</tbody></table>
-			<br><span data-bind="text: outputGestures"></span><br>
-		<p></p>
+						<div class="row">
+							<div class="col-md-2">Add a gesture:</div>
+							<div class="col-md-2"><input type="text" id="custom" style="width:130px" value="" data-bind="value: gestureName" data-bind="click: onClickAddCustom" onkeypress="if (event.keyCode == 13) onClickAddCustom()"></div>
+							<div class="col-md-2"><input type="button" style="width:64px" value="  Add   " data-bind="click : onClickAddCustom"></div>
+						</div>
+						<div class="row">					
+							<div class="col-md-2">Load gestures:</div>
+							<div class="col-md-2"><input type="text" id="custom" style="width:130px" value="" data-bind="value: initGestures" data-bind="click: onClickLoadCustom" onkeypress="if (event.keyCode == 13) onClickLoadCustom()"></div>
+							<div class="col-md-2"><input type="button" style="width:64px" value=" Load " data-bind="click : onClickLoadCustom"></div>
+						</div>
+						<div class="row">
+							<div class="col-md-3">Delete all loaded gestures:</div>
+							<div class="col-md-1">&nbsp;</div>
+							<div class="col-md-2"><input type="button" style="width:64px" value="Delete" data-bind="click: onClickDelete"></div>
+						</div>
+						<div class="row">									
+							<div class="col-md-3">Output all user-defined gestures:</div>
+							<div class="col-md-1">&nbsp;</div>
+							<div class="col-md-2"><input type="button" style="width:64px" value="Output" data-bind="click: onClickOutput"></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6" id="right-column"></div>
+			</div>	
+		<div>
+		<br><span data-bind="text: outputGestures"></span><br>
 	</div>
 </section>

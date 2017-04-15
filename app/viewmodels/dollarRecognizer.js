@@ -16,20 +16,6 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
         initGestures: "",
         scrollY: 0,
 
-        attached: function() {
-            // alert("Initializing");
-            this._points = [];  // new Array();
-            this._r = new Onedol();
-
-            let canvas = document.getElementById("myCanvas");
-            this._g = canvas.getContext("2d");
-            this._g.fillStyle = "rgb(0,0,225)";
-            this._g.strokeStyle = "rgb(0,0,225)";
-            this._g.lineWidth = 1;
-            this._rc = this.getCanvasRect(canvas); // canvas rect on page
-            this._isDown = false;
-        },
-
         getCanvasRect: function(canvas) {
             const w = canvas.width;
             const h = canvas.height;
@@ -44,6 +30,45 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
             return {x: cx, y: cy, width: w, height: h};
         },
 
+        attached: function() {
+            this._points = [];  // new Array();
+            this._r = new Onedol();
+
+            let canvas = document.getElementById("myCanvas");
+            this._g = canvas.getContext("2d");
+            this._g.fillStyle = "rgb(0,0,225)";
+            this._g.strokeStyle = "rgb(0,0,225)";
+            this._g.lineWidth = 1;
+            this._rc = this.getCanvasRect(canvas); // canvas rect on page - TODO: Recall when resizing screen.
+            this._isDown = false;
+
+            this.libraryTiles = document.getElementById("right-column");  // UI Element :(
+            this.drawGesturesOnCanvas(this._r, this.libraryTiles);
+        },
+
+        drawGesturesOnCanvas: function(oneDollar, uiElement) {
+            for (let i = 0; i < oneDollar.Unistrokes.length; i++) {
+                this.drawGestureOnCanvas(oneDollar.Unistrokes[i], uiElement);
+            }
+        },
+
+        drawGestureOnCanvas: function(unistroke, uiElement) {
+            // Original Points
+            let gestureTile = document.createElement("canvas");
+            gestureTile.className = "col-xs-4";
+            let gestureCtx = gestureTile.getContext("2d");
+            gestureCtx.fillStyle = "black";
+            gestureCtx.strokeStyle = "black";
+            this.drawGesture(gestureCtx, unistroke.originalPoints);
+            uiElement.appendChild(gestureTile);   // UI Element :(
+        },
+
+        drawGesture: function(ctx, Points) {
+            // Original Points
+            for (let x = 0; x < Points.length; x++) {
+                ctx.fillRect(Points[x].X/2, Points[x].Y/2, 4, 4);  // UI Element :(
+            }
+        },
 
         //
         // Mouse Events
@@ -109,13 +134,6 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
             }
         },
 
-        drawGesture: function(ctx, Points) {
-            // Original Points
-            for (let x = 0; x < Points.length; x++) {
-                ctx.fillRect(Points[x].X/4, Points[x].Y/4, 1, 1);
-            }
-        },
-
         drawConnectedPoint: function(from, to) {
             this._g.beginPath();
             this._g.moveTo(this._points[from].X, this._points[from].Y);
@@ -148,7 +166,6 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
         */
 
         onClickAddCustom: function() {
-            // alert("in onClickAddCustom");
             const name = this.gestureName;
             if (this._points.length >= 10 && name.length > 0) {
                 const num = this._r.AddGesture(name, this._points);
@@ -158,20 +175,15 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
         },
 
         onClickLoadCustom: function() {
-            // This was challenging.  Needed to parse the text field to an array of JSON objects for
-            //  the one-dollar init function to work.
             this._r = new Onedol(JSON.parse(this.initGestures));
             this.message = "Loaded " + this._r.Unistrokes.length + " gestures";
-        },
-
-        onClickCustom: function() {
-            // alert("in Click Custom Event");
-            document.getElementById("custom").select();
+            this.drawGesturesOnCanvas(this._r, this.libraryTiles);
         },
 
         onClickDelete: function() {
             this._r.DeleteUserGestures(); 
             this.message = this._r.Unistrokes.length + " gestures defined";
+            this.clearUI(this.libraryTiles);
         },
 
         onClickOutput: function() {
@@ -181,6 +193,14 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
                 gestures.push({"name": this._r.Unistrokes[x].Name, "points": this._r.Unistrokes[x].originalPoints});
             }
             this.outputGestures = JSON.stringify(gestures);
-        }
+        },
+
+        // I defined these 2 "wrong" but it works.  Did I make a private method? Is this best practice?
+        clearUI(tiles) {
+            while (tiles.firstChild) {
+                tiles.removeChild(tiles.firstChild);
+            }
+        },
+
     }; // End Return
 }); // Close Define Function

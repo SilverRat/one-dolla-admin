@@ -4,7 +4,6 @@
         activate: function() {
             router.map([
                 {route: "", title: "Dollar Recognizer", moduleId: "viewmodels/dollarRecognizer", nav: true},
-                {route: "View Gestures", moduleId: "viewmodels/viewLoadedGestures", nav: true},
                 {route: "Log Analyzer", moduleId: "viewmodels/logAnalyzer", nav: true}
             ]).buildNavigationModel();
 
