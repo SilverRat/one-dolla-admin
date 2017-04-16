@@ -42,6 +42,10 @@
 							<div class="col-md-1">&nbsp;</div>
 							<div class="col-md-2"><input type="button" style="width:64px" value="Output" data-bind="click: onClickOutput"></div>
 						</div>
+						<div class="row">
+							<div class="col-md-3"><input type="radio" name="algorithmChoice" value=false data-bind="checkedValue: false, checked: useProtractor"> Use Golden Section Search</div>
+							<div class="col-md-3"><input type="radio" name="algorithmChoice" value=true data-bind="checkedValue: true, checked: useProtractor"> Use Protractor (faster)</div>
+						</div>
 					</div>
 				</div>
 				<div class="col-md-6" id="right-column"></div>

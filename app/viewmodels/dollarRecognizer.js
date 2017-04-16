@@ -15,6 +15,7 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
         outputGestures: "",
         initGestures: "",
         scrollY: 0,
+        useProtractor: false,
 
         getCanvasRect: function(canvas) {
             const w = canvas.width;
@@ -126,8 +127,8 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
             if (this._isDown) {
                 this._isDown = false;
                 if (this._points.length >= 10) {
-                    const result = this._r.Recognize(this._points); // document.getElementById("useProtractor").checked);
-                    this.message = "Result: " + result.Name + " (" + this.round(result.Score, 2) + ").";
+                    const result = this._r.Recognize(this._points, this.useProtractor); // document.getElementById("useProtractor").checked);
+                    this.message = "Result: " + result.Name + " (" + this.round(result.Score, 2) + "). Use Protractor is: " + this.useProtractor;
                 } else { // fewer than 10 points were inputted
                     this.message = "Too few points made. Please try again.";
                 }
