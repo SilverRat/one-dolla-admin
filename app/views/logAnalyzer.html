@@ -17,9 +17,9 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4">Select the Library gesture to visualize:</div>
-                    <div class="col-md-2"><select data-bind="options: libraryGestureNames, value: selectedLibraryGesture, selectedOptions: onClickLibrarySelection"></select></div>
+                    <div class="col-md-2"><select data-bind="options: libraryGestureNames, value: selectedLibraryGesture, event: { change: onClickLibrarySelection }"></select></div>
                     <div class="col-md-4">Select the Log gesture to visualize:</div>
-                    <div class="col-md-2"><select data-bind="options: logGestureNames"></select></div>
+                    <div class="col-md-2"><select data-bind="options: logGestureNames, value: selectedLogGesture, event: { change: onClickLogSelection }"></select></div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">Delete all library gestures:</div>

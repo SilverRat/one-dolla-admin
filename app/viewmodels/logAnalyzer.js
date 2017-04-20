@@ -107,6 +107,10 @@ define(["durandal/app", "knockout", "onedollar"], function(app, ko, Onedol) {
         },
 
         onClickLogSelection: function() {
+            this.clearUI(this.logTiles);
+            // Is there a better way to figure out the unistoke index for selectedLibraryGesture?
+            let x = this.findIndexByKeyValue(this.oneDollarLibrary.Unistrokes, "Name", this.selectedLogGesture);
+            this.drawGestureOnCanvas(this.oneDollarLog.Unistrokes[x], this.logTiles);
         },
 
         // I defined these 2 "wrong" but it works.  Did I make a private method? Is this best practice?
