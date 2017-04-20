@@ -1,0 +1,20 @@
+{
+  "name": "one-dolla-admin",
+  "description": "![Durandal](http://durandaljs.com/media/DURANDAL-FINAL-HI-RES-LOGO-HOR-WEB.png)",
+  "main": "index.js",
+  "authors": [
+    "Jerry Gray"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/SilverRat/one-dolla-admin",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "clipboard": "^1.6.1"
+  }
+}

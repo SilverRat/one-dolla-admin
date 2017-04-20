@@ -39,8 +39,11 @@
 						</div>
 						<div class="row">									
 							<div class="col-md-3">Output all user-defined gestures:</div>
-							<div class="col-md-1">&nbsp;</div>
-							<div class="col-md-2"><input type="button" style="width:64px" value="Output" data-bind="click: onClickOutput"></div>
+							<div class="col-md-1">&nbsp</div>
+							<div class="col-md-2">
+								<input type="button" style="width:64px" value="Output" data-bind="click: onClickOutput">
+								<button class="clipboard" data-clipboard-target="#gestureLibrary" data-bind="visible: showClipboard"><img src="../assets/clippy.svg" alt="Copy to clipboard" width=14></button>
+							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-3"><input type="radio" name="algorithmChoice" value=false data-bind="checkedValue: false, checked: useProtractor"> Use Golden Section Search</div>
@@ -51,6 +54,6 @@
 				<div class="col-md-6" id="right-column"></div>
 			</div>	
 		<div>
-		<br><span data-bind="text: outputGestures"></span><br>
+		<br><span data-bind="text: outputGestures" id="gestureLibrary"></span><br>
 	</div>
 </section>

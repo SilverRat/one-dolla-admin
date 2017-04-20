@@ -1,4 +1,4 @@
-define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http, app, Onedol) {
+define(["jquery", "plugins/http", "durandal/app", "onedollar", "clipboard"], function($, http, app, Onedol, Clipboard) {
     return{
 
         //
@@ -16,6 +16,8 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
         initGestures: "",
         scrollY: 0,
         useProtractor: false,
+        clipboard: "",
+        showClipboard: false,
 
         getCanvasRect: function(canvas) {
             const w = canvas.width;
@@ -32,6 +34,8 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
         },
 
         attached: function() {
+            this.clipboard = new Clipboard(".clipboard");
+            
             this._points = [];  // new Array();
             this._r = new Onedol();
 
@@ -194,6 +198,7 @@ define(["jquery", "plugins/http", "durandal/app", "onedollar"], function($, http
                 gestures.push({"name": this._r.Unistrokes[x].Name, "points": this._r.Unistrokes[x].originalPoints});
             }
             this.outputGestures = JSON.stringify(gestures);
+            this.showClipboard = true;
         },
 
         // I defined these 2 "wrong" but it works.  Did I make a private method? Is this best practice?
